@@ -1,3 +1,9 @@
+/**
+ * Author: Munyaradzi Chikuruwo
+ * Cassava Smartech GT Assignment
+ * Version: 1.0
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,9 +18,13 @@ public class RandomRectangleGUI{
 	public static void main (String[] args){
 		RandomRectangleGUI gui = new RandomRectangleGUI();
 		gui.go();
+		//Accessing the inner class methods
+		gui.changeColor();
+		gui.changeSize();
+
 	}
 
-	public void go(){
+    public void go(){
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -24,10 +34,58 @@ public class RandomRectangleGUI{
 		frame.getContentPane().add(BorderLayout.PAGE_START, colorButton);
 		frame.getContentPane().add(BorderLayout.PAGE_END, sizeButton);
 		frame.getContentPane().add(BorderLayout.CENTER, drawPanel);
+		frame.pack();
 		frame.setSize(500,500);
 		frame.setVisible(true);
 	}
+    public class RandomColorListener  implements ActionListener{
 
+	    public void getColors() {
+            colorButton.addActionListener(this);//connect color button to function
+
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource()==colorButton){
+
+                drawPanel.setForeground(drawPanel.color);//maintain shape color
+                drawPanel.randomColor(); //change color
+
+            }
+
+        }
+    }
+    public class SizeListener implements ActionListener{
+
+	    public void getSize(){
+            sizeButton.addActionListener(this);//connect size button to function
+
+        }
+
+	    @Override
+        public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource()==sizeButton){
+            drawPanel.setForeground(drawPanel.color);
+            drawPanel.randomSize();//change size
+
+        }
+
+        }
+
+    }
+
+    //Method to access random color Listener
+ public void changeColor(){
+     RandomColorListener randomColorListener = new RandomColorListener();
+     randomColorListener.getColors();
+ }
+    //Method to access size Listener
+    public void changeSize(){
+        SizeListener sizeListener = new SizeListener();
+        sizeListener.getSize();
+    }
 
 
 	class RandomRectDrawPanel extends JPanel{
@@ -69,4 +127,5 @@ public class RandomRectangleGUI{
 			if (width < 5) width = 5; //minimum width
 		}				
 	}
+
 }
